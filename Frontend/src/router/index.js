@@ -15,8 +15,8 @@ const router = createRouter({
   { path: '/verify', component: VerifySetPasswordView },
   { path: '/set-password', component: SetPasswordView },
   { path: '/admin/login', component: AdminLoginView },
-  { path: '/admin/participants', component: AdminParticipantsView },
-  { path: '/admin/draw', component: AdminDrawView },],
+  { path: '/admin/participantes', component: AdminParticipantsView },
+  { path: '/admin/sorteo', component: AdminDrawView },],
 })
 
 export default router

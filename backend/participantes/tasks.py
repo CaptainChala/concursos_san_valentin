@@ -12,7 +12,7 @@ def enviar_correo_verificacion(participante_id):
     participante.verificacion_token = token
     participante.save()
     # Enlace de verificación con token
-    enlace = f"http://localhost:8000/api/verificar/?token={token}"
+    enlace = f"http://localhost:3000/verificar/?token={token}"
     send_mail(
         subject="Verifica tu correo",
         message=f"Hola {participante.nombre_completo}, verifica tu cuenta aquí: {enlace}",

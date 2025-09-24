@@ -26,14 +26,13 @@ class SetPasswordView(APIView):
             )
             if not participante.verificado:
                 return Response({"error": "Usuario no verificado."}, status=400)
-            # Aquí puedes guardar la contraseña en el modelo User relacionado, o en Participante si lo prefieres
-            user = User.objects.filter(email=participante.email).first()
-            if user:
-                user.password = make_password(password)
-                user.save()
-                return Response({"message": "Contraseña creada y cuenta activada."})
-            else:
-                return Response({"error": "Usuario no encontrado."}, status=404)
+
+            # Guardar contraseña en Participante
+            participante.password = make_password(password)
+            participante.verificado = True
+            participante.save()
+
+            return Response({"message": "Contraseña creada y cuenta activada. Usted ya se encuentra participando."})
         except jwt.InvalidTokenError:
             return Response({"error": "Token inválido."}, status=400)
 

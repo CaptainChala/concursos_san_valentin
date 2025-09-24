@@ -14,7 +14,7 @@ export default {
     data() { return { participants: [] } },
     async mounted() {
         try {
-            const res = await API.get('admin/participants/')
+            const res = await API.get('admin/participantes/')
             this.participants = res.data
         } catch (e) { console.error(e) }
     }
