@@ -2,7 +2,7 @@
   <div>
     <h2>Sorteo de Ganador</h2>
 
-    <!-- Botón de regresar -->
+    
     <button @click="$router.push('/admin/participantes')" style="margin-bottom: 20px;">
       ← Volver a Participantes
     </button>

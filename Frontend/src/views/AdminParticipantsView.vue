@@ -2,7 +2,7 @@
   <div>
     <h2>Listado de Participantes</h2>
 
-    <!-- Botón para ir al sorteo -->
+    
     <button
       @click="$router.push('/admin/sorteo')"
       :disabled="!participants.some(p => p.verificado)"
@@ -11,7 +11,7 @@
       Ingresar al Sorteo
     </button>
 
-    <!-- Input de búsqueda -->
+    
     <input
       v-model="search"
       placeholder="Buscar por nombre o correo"

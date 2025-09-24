@@ -28,7 +28,7 @@ export default {
     try {
       const res = await API.get(`verificar/?token=${token}`);
       this.message = res.data.message;
-      // Redirigir automáticamente si la verificación fue exitosa
+      
       if (res.data.message && res.data.message.includes('Correo verificado')) {
         setTimeout(() => {
           window.location.href = `/set-password?token=${token}`;

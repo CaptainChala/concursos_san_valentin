@@ -1,4 +1,4 @@
-# Dockerfile para Vue.js Frontend
+
 FROM node:20-alpine
 
 WORKDIR /app

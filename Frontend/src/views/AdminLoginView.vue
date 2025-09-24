@@ -42,7 +42,7 @@ export default {
 
         this.message = res.data.message || 'Login exitoso';
 
-        // ✅ Redirigir a AdminParticipantsView después del login exitoso
+        
         this.$router.push('/admin/participantes');
 
       } catch (e) {

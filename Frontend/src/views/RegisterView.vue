@@ -11,7 +11,7 @@
     <div v-if="message">{{ message }}</div>
     <div v-if="error" style="color:red">{{ error }}</div>
 
-    <!-- Botón de login -->
+    
     <div style="margin-top: 20px;">
       <router-link to="/admin/login">
         <button>Login Admin</button>
