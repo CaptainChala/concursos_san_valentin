@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: django_backend
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    volumes:
+      - ./backend:/app
+
+  celery:
+    build: ./backend
+    container_name: celery_worker
+    command: celery -A concurso worker --loglevel=info
+    depends_on:
+      - backend
+      - redis
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/app
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  frontend:
+    build: ./Frontend
+    container_name: vue_frontend
+    ports:
+      - "3000:80"

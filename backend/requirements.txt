@@ -1,0 +1,19 @@
+Django==4.2.7
+djangorestframework==3.14.0
+django-cors-headers==4.2.0
+
+# Celery + Redis
+celery==5.3.4
+redis==5.0.1
+
+# Opcional: para monitorear resultados de tareas Celery
+django-celery-results==2.5.1
+
+# Envío de correos (SMTP incluido en Django)
+# Si usas Gmail u otro SMTP no necesitas nada extra
+
+# Para pruebas
+pytest==7.4.2
+pytest-django==4.5.2
+
+PyJWT==2.10.1
