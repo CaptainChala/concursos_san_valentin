@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from .models import Participante, User
 from .serializers import ParticipanteSerializer
 from .tasks import enviar_correo_verificacion, enviar_correo_ganador
+from django.contrib.auth import authenticate
 
 
 class SetPasswordView(APIView):
@@ -32,7 +33,11 @@ class SetPasswordView(APIView):
             participante.verificado = True
             participante.save()
 
-            return Response({"message": "Contraseña creada y cuenta activada. Usted ya se encuentra participando."})
+            return Response(
+                {
+                    "message": "Contraseña creada y cuenta activada. Usted ya se encuentra participando."
+                }
+            )
         except jwt.InvalidTokenError:
             return Response({"error": "Token inválido."}, status=400)
 
@@ -104,3 +109,21 @@ class SorteoGanadorView(APIView):
         ganador = random.choice(participantes)
         enviar_correo_ganador.delay(ganador.id)
         return Response({"ganador": ganador.email})
+
+
+class AdminLoginView(APIView):
+    def post(self, request):
+        username = request.data.get("username")
+        password = request.data.get("password")
+
+        if not username or not password:
+            return Response(
+                {"error": "Username y contraseña son requeridos"}, status=400
+            )
+
+        # Autenticación usando username
+        user = authenticate(request, username=username, password=password)
+
+        if user and user.is_staff:
+            return Response({"message": "Login exitoso"})
+        return Response({"error": "Credenciales inválidas"}, status=400)
