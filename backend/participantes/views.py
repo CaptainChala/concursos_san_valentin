@@ -93,22 +93,42 @@ class VerificarCorreoView(APIView):
 
 
 class ListaParticipantesAdminView(generics.ListAPIView):
-    serializer_class = ParticipanteSerializer
     queryset = Participante.objects.all()
-    permission_classes = [permissions.IsAdminUser]
+    serializer_class = ParticipanteSerializer
 
+
+# views.py
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from participantes.models import Participante
+from django.core.mail import send_mail
+import random
 
 class SorteoGanadorView(APIView):
-    permission_classes = [permissions.IsAdminUser]
+    # authentication_classes = [TokenAuthentication]  # opcional
+    # permission_classes = [IsAdminUser]  # opcional
 
     def post(self, request):
         participantes = Participante.objects.filter(verificado=True)
         if not participantes.exists():
-            return Response({"error": "No hay participantes válidos."}, status=400)
+            return Response({"error": "No hay participantes verificados"}, status=400)
 
         ganador = random.choice(participantes)
-        enviar_correo_ganador.delay(ganador.id)
-        return Response({"ganador": ganador.email})
+        
+        # Enviar correo
+        send_mail(
+            subject="¡Felicidades! Ganaste el sorteo",
+            message=f"Hola {ganador.nombre_completo},\n¡Has ganado el sorteo!",
+            from_email="no-reply@sorteo.com",
+            recipient_list=[ganador.email],
+            fail_silently=True,
+        )
+
+        return Response({
+            "nombre": ganador.nombre_completo,
+            "email": ganador.email
+        })
+
 
 
 class AdminLoginView(APIView):

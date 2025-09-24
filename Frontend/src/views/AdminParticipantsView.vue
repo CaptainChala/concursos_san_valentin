@@ -2,11 +2,21 @@
   <div>
     <h2>Listado de Participantes</h2>
 
+    <!-- Botón para ir al sorteo -->
+    <button
+      @click="$router.push('/admin/sorteo')"
+      :disabled="!participants.some(p => p.verificado)"
+      style="margin-bottom: 20px;"
+    >
+      Ingresar al Sorteo
+    </button>
+
     <!-- Input de búsqueda -->
     <input
       v-model="search"
       placeholder="Buscar por nombre o correo"
       @input="filterList"
+      style="margin-bottom: 10px;"
     />
 
     <table border="1" cellpadding="5">
@@ -49,7 +59,9 @@ export default {
       this.loading = true
       this.error = ''
       try {
-        const res = await API.get('admin/participantes/')
+        const res = await API.get('admin/participantes/', {
+          headers: { Authorization: `Token ${localStorage.getItem('token')}` }
+        })
         this.participants = res.data
         this.filteredParticipants = this.participants
       } catch (e) {
