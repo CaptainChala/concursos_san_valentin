@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 class User(AbstractUser):
     is_admin = models.BooleanField(default=False)
+
 
 class Participante(models.Model):
     nombre_completo = models.CharField(max_length=255)

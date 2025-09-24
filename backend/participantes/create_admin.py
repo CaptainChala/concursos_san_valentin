@@ -2,9 +2,10 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 def run():
     email = "admin@correo.com"
-    username = "admin"  # obligatorio
+    username = "admin"
     password = "123456"
 
     if not User.objects.filter(email=email).exists():
@@ -12,9 +13,9 @@ def run():
             username=username,
             email=email,
             password=password,
-            is_admin=True,   # opcional según tu modelo
+            is_admin=True,
             is_staff=True,
-            is_superuser=True
+            is_superuser=True,
         )
         print(f"Admin creado: {email}")
     else:

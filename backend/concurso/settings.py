@@ -6,9 +6,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "cambia_esto_por_un_valor_seguro"
 
-DEBUG = True  # ⚠️ Cambiar a False en producción
+DEBUG = True  
 
-ALLOWED_HOSTS = ["*"]  # Ajusta según despliegue
+ALLOWED_HOSTS = ["*"]  
 
 # --------------------------------------------------------------------
 # APPS
@@ -20,19 +20,17 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-    # Terceros
+    
     "rest_framework",
-    "corsheaders",  
-
-    # Apps locales
+    "corsheaders",
+    
     "participantes",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",   
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -63,9 +61,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "concurso.wsgi.application"
 
-# --------------------------------------------------------------------
-# BASE DE DATOS (usa SQLite por defecto, cámbialo a PostgreSQL si quieres)
-# --------------------------------------------------------------------
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -73,17 +69,17 @@ DATABASES = {
     }
 }
 
-# --------------------------------------------------------------------
-# PASSWORDS
-# --------------------------------------------------------------------
+
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-AUTH_USER_MODEL = "participantes.User"  # usamos modelo custom
+AUTH_USER_MODEL = "participantes.User"  
 
 # --------------------------------------------------------------------
 # INTERNACIONALIZACIÓN
@@ -122,7 +118,6 @@ EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
 EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True") == "True"
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-
 
 
 CELERY_BROKER_URL = "redis://redis:6379/0"

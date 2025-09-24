@@ -9,6 +9,9 @@ from .models import Participante, User
 from .serializers import ParticipanteSerializer
 from .tasks import enviar_correo_verificacion, enviar_correo_ganador
 from django.contrib.auth import authenticate
+from django.core.mail import send_mail
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAdminUser
 
 
 class SetPasswordView(APIView):
@@ -28,7 +31,7 @@ class SetPasswordView(APIView):
             if not participante.verificado:
                 return Response({"error": "Usuario no verificado."}, status=400)
 
-            # Guardar contraseña en Participante
+            
             participante.password = make_password(password)
             participante.verificado = True
             participante.save()
@@ -97,25 +100,15 @@ class ListaParticipantesAdminView(generics.ListAPIView):
     serializer_class = ParticipanteSerializer
 
 
-# views.py
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from participantes.models import Participante
-from django.core.mail import send_mail
-import random
-
 class SorteoGanadorView(APIView):
-    # authentication_classes = [TokenAuthentication]  # opcional
-    # permission_classes = [IsAdminUser]  # opcional
-
     def post(self, request):
         participantes = Participante.objects.filter(verificado=True)
         if not participantes.exists():
             return Response({"error": "No hay participantes verificados"}, status=400)
 
         ganador = random.choice(participantes)
+
         
-        # Enviar correo
         send_mail(
             subject="¡Felicidades! Ganaste el sorteo",
             message=f"Hola {ganador.nombre_completo},\n¡Has ganado el sorteo!",
@@ -124,11 +117,7 @@ class SorteoGanadorView(APIView):
             fail_silently=True,
         )
 
-        return Response({
-            "nombre": ganador.nombre_completo,
-            "email": ganador.email
-        })
-
+        return Response({"nombre": ganador.nombre_completo, "email": ganador.email})
 
 
 class AdminLoginView(APIView):
@@ -141,7 +130,7 @@ class AdminLoginView(APIView):
                 {"error": "Username y contraseña son requeridos"}, status=400
             )
 
-        # Autenticación usando username
+        
         user = authenticate(request, username=username, password=password)
 
         if user and user.is_staff:

@@ -1,11 +1,13 @@
 from django.contrib import admin
 from .models import Participante, User
 
+
 @admin.register(Participante)
 class ParticipanteAdmin(admin.ModelAdmin):
     list_display = ("nombre_completo", "email", "telefono", "verificado", "creado_en")
     search_fields = ("nombre_completo", "email")
     list_filter = ("verificado",)
+
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):

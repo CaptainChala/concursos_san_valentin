@@ -1,4 +1,4 @@
-# Dockerfile para Django Backend
+
 FROM python:3.13-slim
 
 WORKDIR /app
@@ -11,7 +11,7 @@ COPY . .
 
 ENV PYTHONUNBUFFERED=1
 
-# Variables de entorno para correo (puedes cambiar en docker-compose)
+
 ENV EMAIL_USER=tu_email@hotmail.com
 ENV EMAIL_PASS=tu_password
 
