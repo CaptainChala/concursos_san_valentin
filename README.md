@@ -54,12 +54,14 @@ http://localhost:3000
 > Con Docker, no es necesario instalar dependencias ni configurar bases de datos localmente; todo está incluido en los contenedores.
 
 ------------------------------------------------------------
-En caso de no contar con Docker
-Para ejecutar el backend ubicarse en la carpeta raiz backend y luego utilizar: 
-1. python manage.py runserver, lo que correra el servidor en http://127.0.0.1:8000/
+En caso de no contar con Docker debe contar con un Sistema Linux/MacOS para que funcione de manera correcta tanto celery como redis.
+Por lo que para ejecutar el backend ubicarse en la carpeta raiz backend y luego utilizar: 
+1. sudo apt install redis-server para instalar redis y luego sudo service redis-server start para ejecutar y se pueda ocupar el servicio.
+2. celery -A tu_proyecto worker -l info en la carpeta raíz backend.
+3. python manage.py runserver, lo que correra el servidor en http://127.0.0.1:8000/
 Para ejecutar el frontend ubicarse en la carperta raiz frontend y luego ejecutar:
-2. npm run dev lo que correra las vistas en http://localhost:5173/
-3. Al tener ambos corriendo, debería funcionar el proyecto, sin embargo en lo que respecta a la automatización de correo podría no funcionar, por lo que se recomienda hacer uso de docker.
+4. npm run dev lo que correra las vistas en http://localhost:5173/
+5. Al tener ambos corriendo, debería funcionar el proyecto, sin embargo en lo que respecta a la automatización de correo podría no funcionar, por lo que se recomienda hacer uso de docker.
 
 
 ------------------------------------------------------------
