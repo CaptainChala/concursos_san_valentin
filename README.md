@@ -54,6 +54,20 @@ http://localhost:3000
 > Con Docker, no es necesario instalar dependencias ni configurar bases de datos localmente; todo está incluido en los contenedores.
 
 ------------------------------------------------------------
+En caso de no contar con Docker
+Para ejecutar el backend ubicarse en la carpeta raiz backend y luego utilizar: 
+1. python manage.py runserver, lo que correra el servidor en http://127.0.0.1:8000/
+Para ejecutar el frontend ubicarse en la carperta raiz frontend y luego ejecutar:
+2. npm run dev lo que correra las vistas en http://localhost:5173/
+3. Al tener ambos corriendo, debería funcionar el proyecto, sin embargo en lo que respecta a la automatización de correo podría no funcionar, por lo que se recomienda hacer uso de docker.
+
+
+------------------------------------------------------------
+
+Si por alguna razón la base de datos no funciona como debería, ejecutar el siguiente comando en la carpeta raiz de backend:
+python manage.py migrate
+
+------------------------------------------------------------
 
 Decisiones técnicas
 
@@ -61,60 +75,6 @@ Decisiones técnicas
 - Django Rest Framework: Facilita la creación de APIs REST robustas y extensibles.
 - Celery + Redis: Manejo de tareas asíncronas (ej. envío de correos o procesamiento de datos).
 - Frontend separado: Mantener frontend desacoplado del backend permite escalar o reemplazar la interfaz sin afectar la lógica del servidor.
-
-------------------------------------------------------------
-
-Endpoints principales
-
-Registro de usuario
-- POST /api/register/
-Request:
-{
-  "username": "usuario",
-  "email": "correo@dominio.com",
-  "password": "contraseña123"
-}
-Response:
-{
-  "id": 1,
-  "username": "usuario",
-  "email": "correo@dominio.com"
-}
-
-Login
-- POST /api/login/
-Request:
-{
-  "username": "usuario",
-  "password": "contraseña123"
-}
-Response:
-{
-  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
-}
-
-Obtener lista de ítems
-- GET /api/items/
-Response:
-[
-  {
-    "id": 1,
-    "name": "Item 1",
-    "description": "Descripción del item"
-  },
-  {
-    "id": 2,
-    "name": "Item 2",
-    "description": "Descripción del item"
-  }
-]
-
-------------------------------------------------------------
-
-Screenshots / GIFs
-
-Pantalla principal: screenshots/home.png
-API en funcionamiento: screenshots/api.png
 
 ------------------------------------------------------------
 
